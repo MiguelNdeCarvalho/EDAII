@@ -3,45 +3,30 @@ package problem_1;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-public class MaximumNumber
-{
-    public static void main(String[] args) throws IOException
-    {
-        
+public class MaximumNumber{
+    public static void main(String[] args) throws NumberFormatException, IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); // Creates the buffer
-        int i=0;
-        List<Integer> highestNums = new ArrayList<>();
+        int higherNum = -2147483648;
 
         int numChildren =  Integer.parseInt(reader.readLine());
         if(numChildren < 1 || numChildren > 300000)
         {
             System.exit(1);
         }
-
-        while(i < numChildren) {
+        
+        for (int i = 0; i < numChildren; i++) {
             String readLine = reader.readLine();
-            if(readLine.length() < 0 &&  readLine.length()> 10)
-                System.exit(1);
 
             String[] lineNums = readLine.split(" ");
-            int[] childrenNums = new int[10];
+            int currentNum;
 
-            int j=0;
-            for(String num: lineNums)
-            {
-                childrenNums[j]=Integer.parseInt(num);
-                j++;
+            for (int j = 1; j < Integer.parseInt(lineNums[0]) + 1; j++) {
+                currentNum=Integer.parseInt(lineNums[j]);
+                if (currentNum > higherNum)
+                    higherNum = currentNum;
             }
-
-
-            highestNums.add(Arrays.stream(childrenNums).max().getAsInt());
-            i++;
         }
-        System.out.println(Collections.max(highestNums));
+        System.out.println(higherNum);
     }
 }
