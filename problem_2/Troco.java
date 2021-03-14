@@ -1,4 +1,4 @@
-package problem_2;
+// package problem_2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,22 +35,18 @@ public class Troco {
 
     public static int coins(int value, int[] coinsArr)
     {
-        int aux = Integer.MAX_VALUE;
-        int count = 0;
-        if (value == 0)
-        {
-            return 1;
+        int[] solutions = new int[value + 1];
+        solutions[0] = 0; // We need 0 coins for value 0
+        Arrays.fill(solutions, 1, solutions.length,value+1);
+        for (int i = 0; i < solutions.length; i++) {
+            for (int j = 0; j < coinsArr.length; j++) {
+                if (coinsArr[j] <= i)
+                    solutions[i] = Math.min(1 + solutions[i- coinsArr[j]], solutions[i]);
+            }
         }
-        else if (value < 0)
-        {
-            return 0;
-        }
-        for (int i = 0; i < coinsArr.length; i++) {
-            count += coins(value - coinsArr[i], coinsArr);
-            if (count < aux)
-                aux = count;
-            count = 0;
-        }
-        return  aux + 1;
+        
+        // System.out.println(Arrays.toString(solutions));
+
+        return solutions[value];
     }
 }
